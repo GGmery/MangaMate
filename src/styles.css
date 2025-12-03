@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Mochi';
+  src: url('/assets/fonts/MochiyPopPOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+body {
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+body.theme-light {
+  --header-bg: #fdf6f0;
+  --header-text: #3a3a3a;
+  --link-color: #5a5a5a;
+  --accent: #f7c8e0;
+  --button-bg: #ffe0ec;
+  --button-text: #5a5a5a;
+  --card-bg: #fffaf5;
+  --card-border: #f7c8e0;
+}
+
+
+body.theme-dark {
+  --header-bg: #1a0b2e;       /* fondo morado muy oscuro */
+  --header-text: #e6e0f8;     /* texto claro con toque lavanda */
+  --link-color: #b8a6d9;      /* enlaces en violeta suave */
+  --accent: #7c4dff;          /* acento púrpura brillante */
+  --button-bg: #2d1b47;       /* botones en morado profundo */
+  --button-text: #d8cfff;     /* texto de botón en lavanda claro */
+  --card-bg: #241036;         /* fondo de tarjetas */
+  --card-border: #6a3bbf;     /* borde púrpura */
+}
+
+
+@keyframes fadeInLight {
+  from { background-color: #0f0f1a; color: #e4e6eb; }
+  to   { background-color: #fdf6f0; color: #3a3a3a; }
+}
+
+@keyframes fadeInDark {
+  from { background-color: #fdf6f0; color: #3a3a3a; }
+  to   { background-color: #0f0f1a; color: #e4e6eb; }
+}
