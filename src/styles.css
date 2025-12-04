@@ -1,38 +1,42 @@
 @font-face {
   font-family: 'Mochi';
-  src: url('/assets/fonts/MochiyPopPOne-Regular.ttf') format('truetype');
+  src: url('/assets/fonts/MochiyPopPOne.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Outfit';
+  src: url('/assets/fonts/Outfit.ttf') format('truetype');
+}
 
 body {
   transition: background-color 0.6s ease, color 0.6s ease;
 }
 
 body.theme-light {
-  --header-bg: #fdf6f0;
+  --header-bg: #e5a2eb;
   --header-text: #3a3a3a;
   --link-color: #5a5a5a;
   --accent: #f7c8e0;
-  --button-bg: #ffe0ec;
+  --button-bg: #eaa1f8;
   --button-text: #5a5a5a;
   --card-bg: #fffaf5;
   --card-border: #f7c8e0;
+  --footer-bg: linear-gradient(135deg, #e5a2eb, #c470da); /* degradado pastel */
 }
 
-
 body.theme-dark {
-  --header-bg: #1a0b2e;       /* fondo morado muy oscuro */
-  --header-text: #e6e0f8;     /* texto claro con toque lavanda */
+  --header-bg: #3a1b47;
+  --header-text: #e6e0f8;
   --link-color: #b8a6d9;      /* enlaces en violeta suave */
   --accent: #7c4dff;          /* acento púrpura brillante */
-  --button-bg: #2d1b47;       /* botones en morado profundo */
+  --button-bg: #402961;       /* botones en morado profundo */
   --button-text: #d8cfff;     /* texto de botón en lavanda claro */
   --card-bg: #241036;         /* fondo de tarjetas */
   --card-border: #6a3bbf;     /* borde púrpura */
+  --footer-bg: linear-gradient(135deg, #3a1b47, #250729); /* degradado morado intenso */
 }
-
 
 @keyframes fadeInLight {
   from { background-color: #0f0f1a; color: #e4e6eb; }

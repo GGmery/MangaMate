@@ -1,6 +1,6 @@
 .app-header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* 3 columnas: logo, links, botón */
   align-items: center;
   padding: 1rem 2rem;
   background-color: var(--header-bg);
@@ -13,19 +13,20 @@
   transition: background-color 0.6s ease, color 0.6s ease;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-self: start; /* logo a la izquierda */
+}
+
 .title {
   font-family: 'Mochi', sans-serif;
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--accent);
   letter-spacing: 2px;
-  transition: color 0.6s ease, text-shadow 0.6s 
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  transition: color 0.6s ease, text-shadow 0.6s;
 }
 
 .logo img {
@@ -35,25 +36,19 @@
   transition: box-shadow 0.6s ease;
 }
 
-.title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  color: var(--accent);
-  transition: color 0.6s ease;
-}
-
 .nav-links {
   display: flex;
   gap: 1.5rem;
+  justify-self: center; /* enlaces centrados en la columna del medio */
 }
 
 .nav-links a {
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 300;
+  font-size: 150%;
   color: var(--link-color);
   transition: color 0.3s ease;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 .nav-links a:hover,
@@ -72,6 +67,7 @@
   font-family: 'Nunito', sans-serif;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: background 0.6s ease, color 0.6s ease, transform 0.4s ease;
+  justify-self: end; /* botón a la derecha */
 }
 
 .theme-toggle:hover {

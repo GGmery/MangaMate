@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mangamate": {
+    "MangaMate": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -19,15 +19,8 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              },
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "assets"
-              }
+              "src/favicon.jpg",
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
@@ -61,10 +54,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "mangamate:build:production"
+              "buildTarget": "MangaMate:build:production"
             },
             "development": {
-              "buildTarget": "mangamate:build:development"
+              "buildTarget": "MangaMate:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,15 +74,7 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              },
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "assets"
-              }
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
