@@ -1,0 +1,105 @@
+<div class="my-list-container">
+  <div class="my-list-header">
+    <h1>Mi Lista</h1>
+    <p class="subtitle">Gestiona tus animes favoritos</p>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando tu lista...</p>
+    </div>
+  }
+
+  @if (!loading) {
+    <div class="tabs">
+      <button 
+        (click)="setActiveTab('Todos')" 
+        [class.active]="activeTab === 'Todos'"
+        class="tab-button">
+        Todos ({{ getTotalCount() }})
+      </button>
+      <button 
+        (click)="setActiveTab('Favoritos')" 
+        [class.active]="activeTab === 'Favoritos'"
+        class="tab-button">
+        Favoritos ({{ getTabCount('Favoritos') }})
+      </button>
+      <button 
+        (click)="setActiveTab('Pendiente')" 
+        [class.active]="activeTab === 'Pendiente'"
+        class="tab-button">
+        Pendiente ({{ getTabCount('Pendiente') }})
+      </button>
+      <button 
+        (click)="setActiveTab('Viendo')" 
+        [class.active]="activeTab === 'Viendo'"
+        class="tab-button">
+        Viendo ({{ getTabCount('Viendo') }})
+      </button>
+      <button 
+        (click)="setActiveTab('Completado')" 
+        [class.active]="activeTab === 'Completado'"
+        class="tab-button">
+        Completado ({{ getTabCount('Completado') }})
+      </button>
+      <button 
+        (click)="setActiveTab('Abandonado')" 
+        [class.active]="activeTab === 'Abandonado'"
+        class="tab-button">
+        Abandonado ({{ getTabCount('Abandonado') }})
+      </button>
+    </div>
+
+    @if (filteredItems.length === 0) {
+      <div class="empty-state">
+        <p class="empty-message">
+          @if (activeTab === 'Todos') {
+            No tienes animes en tu lista todavía. ¡Empieza a agregar algunos!
+          } @else {
+            No tienes animes con estado "{{ activeTab }}".
+          }
+        </p>
+        <a routerLink="/" class="empty-link">Buscar animes</a>
+      </div>
+    }
+
+    @if (filteredItems.length > 0) {
+      <div class="list-items">
+        @for (item of filteredItems; track item.anime.mal_id) {
+          <div class="list-item-card">
+            <app-anime-card [anime]="item.anime"></app-anime-card>
+            <div class="item-actions">
+              <div class="item-status">
+                <span class="status-label">Estado:</span>
+                <span class="status-value" [class]="'status-' + item.status.toLowerCase()">
+                  {{ item.status }}
+                </span>
+              </div>
+              @if (item.personalScore) {
+                <div class="item-score">
+                  <span class="score-label">Tu puntuación:</span>
+                  <span class="score-value">{{ item.personalScore }}</span>
+                </div>
+              }
+              <div class="item-buttons">
+                <button 
+                  (click)="toggleFavorite(item.anime.mal_id)" 
+                  class="btn-favorite-small"
+                  [class.favorite]="item.isFavorite">
+                  {{ item.isFavorite ? '❤️' : '🤍' }}
+                </button>
+                <a [routerLink]="['/anime', item.anime.mal_id]" class="btn-details">Ver detalles</a>
+                <button 
+                  (click)="removeAnime(item.anime.mal_id)" 
+                  class="btn-remove-small">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

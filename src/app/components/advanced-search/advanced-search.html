@@ -1,0 +1,81 @@
+<div class="advanced-search">
+  <h3 class="advanced-search-title">Búsqueda Avanzada</h3>
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="advanced-search-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="q">Nombre del anime</label>
+        <input type="text" id="q" formControlName="q" placeholder="Buscar por nombre..." />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="type">Tipo</label>
+        <select id="type" formControlName="type">
+          <option value="">Todos</option>
+          <option value="tv">TV</option>
+          <option value="movie">Película</option>
+          <option value="ova">OVA</option>
+          <option value="special">Especial</option>
+          <option value="ona">ONA</option>
+          <option value="music">Music</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Estado</label>
+        <select id="status" formControlName="status">
+          <option value="">Todos</option>
+          <option value="airing">En emisión</option>
+          <option value="complete">Finalizado</option>
+          <option value="upcoming">Próximamente</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Clasificación</label>
+        <select id="rating" formControlName="rating">
+          <option value="">Todas</option>
+          <option value="g">G - Todas las edades</option>
+          <option value="pg">PG - Niños</option>
+          <option value="pg13">PG-13 - Adolescentes 13+</option>
+          <option value="r17">R - Mayores de 17</option>
+          <option value="r">R+ - Contenido suave</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="order_by">Ordenar por</label>
+        <select id="order_by" formControlName="order_by">
+          <option value="">Por defecto</option>
+          <option value="title">Título</option>
+          <option value="type">Tipo</option>
+          <option value="rating">Puntuación</option>
+          <option value="start_date">Fecha de inicio</option>
+          <option value="end_date">Fecha de fin</option>
+          <option value="episodes">Episodios</option>
+          <option value="score">Puntuación</option>
+          <option value="scored_by">Número de votos</option>
+          <option value="rank">Ranking</option>
+          <option value="popularity">Popularidad</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sort">Orden</label>
+        <select id="sort" formControlName="sort">
+          <option value="">Por defecto</option>
+          <option value="asc">Ascendente</option>
+          <option value="desc">Descendente</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" (click)="resetFilters()" class="btn-reset">Limpiar</button>
+      <button type="submit" class="btn-submit">Buscar</button>
+    </div>
+  </form>
+</div>

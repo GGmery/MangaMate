@@ -1,0 +1,223 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 25%, #DDD6FE 50%, #E9D5FF 75%, #F3E8FF 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+  color: #5B21B6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #4c1d95 50%, #312e81 75%, #1e1b4b 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  color: #FFFFFF;
+}
+
+body.dark-mode,
+body.dark-mode * {
+  color: #FFFFFF;
+}
+
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode label,
+body.dark-mode div,
+body.dark-mode li,
+body.dark-mode td,
+body.dark-mode th {
+  color: #FFFFFF;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.anime-card,
+.advanced-search,
+.synopsis-section,
+.additional-info,
+.episodes-section,
+.reviews-section,
+.anime-detail-header,
+.empty-state,
+.list-item-card,
+.search-input-wrapper,
+.stat-item,
+.anime-match-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(196, 181, 253, 0.4);
+  box-shadow: 0 8px 32px rgba(167, 139, 250, 0.15), 
+              0 2px 8px rgba(167, 139, 250, 0.1);
+}
+
+body.dark-mode .anime-card,
+body.dark-mode .advanced-search,
+body.dark-mode .synopsis-section,
+body.dark-mode .additional-info,
+body.dark-mode .episodes-section,
+body.dark-mode .reviews-section,
+body.dark-mode .anime-detail-header,
+body.dark-mode .empty-state,
+body.dark-mode .list-item-card,
+body.dark-mode .search-input-wrapper,
+body.dark-mode .stat-item,
+body.dark-mode .anime-match-card {
+  background: rgba(30, 27, 75, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 32px rgba(76, 29, 149, 0.4),
+              0 2px 8px rgba(124, 58, 237, 0.2);
+  color: #E9D5FF;
+}
+
+body.dark-mode .anime-card-title,
+body.dark-mode .anime-title,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode .card-title {
+  color: #FFFFFF !important;
+}
+
+body.dark-mode .anime-type,
+body.dark-mode .anime-episodes {
+  background: rgba(139, 92, 246, 0.2);
+  color: #FFFFFF !important;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .status-select,
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background: rgba(49, 46, 129, 0.6);
+  color: #FFFFFF !important;
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+body.dark-mode .form-group input::placeholder,
+body.dark-mode input::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark-mode .item-status,
+body.dark-mode .item-score,
+body.dark-mode .episode-item,
+body.dark-mode .review-item {
+  background: rgba(49, 46, 129, 0.4);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+body.dark-mode .tab-button {
+  color: #FFFFFF !important;
+}
+
+body.dark-mode .synopsis,
+body.dark-mode .card-synopsis,
+body.dark-mode .episode-title-japanese,
+body.dark-mode .episode-date,
+body.dark-mode .episode-score,
+body.dark-mode .review-content,
+body.dark-mode .review-date,
+body.dark-mode .review-username,
+body.dark-mode .stat-label,
+body.dark-mode .stat-value,
+body.dark-mode .no-data,
+body.dark-mode .carousel-loading,
+body.dark-mode .loading-container p,
+body.dark-mode .error-message,
+body.dark-mode .no-results,
+body.dark-mode .card-title-english,
+body.dark-mode .anime-title-japanese {
+  color: #FFFFFF !important;
+}
+
+body.dark-mode .review-content p,
+body.dark-mode .review-content span,
+body.dark-mode .synopsis p,
+body.dark-mode .match-subtitle,
+body.dark-mode .stat-badge,
+body.dark-mode .card-link {
+  color: #FFFFFF !important;
+}
+
+body.dark-mode p,
+body.dark-mode span:not(.score-value):not(.logo-text),
+body.dark-mode label,
+body.dark-mode div:not(.navbar-brand):not(.logo-text),
+body.dark-mode h1:not(.logo-text),
+body.dark-mode h2:not(.logo-text),
+body.dark-mode h3:not(.logo-text),
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+  color: #FFFFFF !important;
+}
+
+body.dark-mode .tab-button:hover {
+  background: rgba(139, 92, 246, 0.2);
+}
+
+body.dark-mode .tab-button.active {
+  background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease-out;
+}
+
+router-outlet + * {
+  display: block;
+  animation: fadeIn 0.3s ease-out;
+}

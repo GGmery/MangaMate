@@ -1,0 +1,118 @@
+<div class="match-container">
+  <div class="match-header">
+    <h1>🎯 Encuentra tu Match en el Anime</h1>
+    <p class="match-subtitle">Desliza o usa los botones para descubrir animes</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item liked">
+      <span class="stat-icon">❤️</span>
+      <span class="stat-label">Guardados</span>
+      <span class="stat-value">{{ likedCount }}</span>
+    </div>
+    <div class="stat-item passed">
+      <span class="stat-icon">❌</span>
+      <span class="stat-label">Omitidos</span>
+      <span class="stat-value">{{ passedCount }}</span>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Buscando tu próximo anime...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error-container">
+      <p class="error-message">❌ {{ error }}</p>
+      <button (click)="loadRandomAnime()" class="retry-button">Intentar de nuevo</button>
+    </div>
+  }
+
+  @if (currentAnime && !loading && !error) {
+    <div class="card-container">
+      <div 
+        class="anime-match-card"
+        [style.transform]="cardTransform"
+        [style.opacity]="cardOpacity"
+        (touchstart)="onTouchStart($event)"
+        (touchmove)="onTouchMove($event)"
+        (touchend)="onTouchEnd()"
+        (mousedown)="onMouseDown($event)"
+        [class.swiping-right]="swipeDirection === 'right'"
+        [class.swiping-left]="swipeDirection === 'left'">
+        
+        <div class="card-image">
+          <img [src]="getImageUrl()" [alt]="currentAnime.title" />
+          <div class="card-overlay">
+            @if (swipeDirection === 'right') {
+              <div class="swipe-indicator like-indicator">❤️ LIKE</div>
+            }
+            @if (swipeDirection === 'left') {
+              <div class="swipe-indicator pass-indicator">❌ PASS</div>
+            }
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="card-header">
+            <h2 class="card-title">{{ currentAnime.title }}</h2>
+            @if (currentAnime.title_english && currentAnime.title_english !== currentAnime.title) {
+              <p class="card-title-english">{{ currentAnime.title_english }}</p>
+            }
+          </div>
+
+          <div class="card-stats">
+            <div class="stat-badge">
+              <span class="stat-icon-small">⭐</span>
+              <span>{{ getScore() }}</span>
+            </div>
+            <div class="stat-badge" *ngIf="currentAnime.episodes">
+              <span class="stat-icon-small">📺</span>
+              <span>{{ currentAnime.episodes }} eps</span>
+            </div>
+            <div class="stat-badge">
+              <span class="stat-icon-small">📊</span>
+              <span>{{ currentAnime.status }}</span>
+            </div>
+          </div>
+
+          @if (currentAnime.genres && currentAnime.genres.length > 0) {
+            <div class="card-genres">
+              @for (genre of currentAnime.genres.slice(0, 3); track genre.mal_id) {
+                <span class="genre-badge">{{ genre.name }}</span>
+              }
+            </div>
+          }
+
+          @if (currentAnime.synopsis) {
+            <p class="card-synopsis">
+              {{ (currentAnime.synopsis.length > 200 ? currentAnime.synopsis.substring(0, 200) + '...' : currentAnime.synopsis) }}
+            </p>
+          }
+
+          <a [routerLink]="['/anime', currentAnime.mal_id]" class="card-link">
+            Ver detalles completos →
+          </a>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button (click)="passAnime()" class="action-btn pass-btn" [disabled]="loading">
+          <span class="btn-icon">❌</span>
+          <span class="btn-text">Pasar</span>
+        </button>
+        <button (click)="likeAnime()" class="action-btn like-btn" [disabled]="loading">
+          <span class="btn-icon">❤️</span>
+          <span class="btn-text">Guardar</span>
+        </button>
+      </div>
+    </div>
+  }
+
+  <div class="match-instructions">
+    <p>💡 <strong>Tip:</strong> Desliza la tarjeta a la derecha para guardar o a la izquierda para omitir. También puedes usar los botones.</p>
+  </div>
+</div>

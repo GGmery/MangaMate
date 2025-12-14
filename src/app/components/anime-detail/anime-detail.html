@@ -1,0 +1,216 @@
+<div class="anime-detail-container">
+  @if (loading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando información del anime...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error-container">
+      <p class="error-message">❌ {{ error }}</p>
+      <button (click)="router.navigate(['/'])" class="back-button">Volver al inicio</button>
+    </div>
+  }
+
+  @if (anime && !loading) {
+    <button (click)="router.navigate(['/'])" class="back-button">← Volver</button>
+
+    <div class="anime-detail-header">
+      <div class="anime-image">
+        <img [src]="getImageUrl()" [alt]="anime.title" />
+      </div>
+
+      <div class="anime-info">
+        <h1 class="anime-title">{{ anime.title }}</h1>
+        @if (anime.title_english && anime.title_english !== anime.title) {
+          <h2 class="anime-title-english">{{ anime.title_english }}</h2>
+        }
+        @if (anime.title_japanese) {
+          <p class="anime-title-japanese">{{ anime.title_japanese }}</p>
+        }
+
+        <div class="anime-stats">
+          <div class="stat">
+            <span class="stat-label">Puntuación:</span>
+            <span class="stat-value score">{{ getScore() }}</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Episodios:</span>
+            <span class="stat-value">{{ anime.episodes || 'N/A' }}</span>
+          </div>
+          <div class="stat" [class]="getStatusClass()">
+            <span class="stat-label">Estado:</span>
+            <span class="stat-value">{{ anime.status }}</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Tipo:</span>
+            <span class="stat-value">{{ anime.type }}</span>
+          </div>
+        </div>
+
+        <div class="anime-genres">
+          @for (genre of anime.genres; track genre.mal_id) {
+            <span class="genre-tag">{{ genre.name }}</span>
+          }
+        </div>
+
+        <div class="anime-actions">
+          <select [(ngModel)]="selectedStatus" class="status-select">
+            <option value="Pendiente">Pendiente</option>
+            <option value="Viendo">Viendo</option>
+            <option value="Completado">Completado</option>
+            <option value="Abandonado">Abandonado</option>
+          </select>
+
+          <button (click)="addToMyList()" class="btn-add">
+            {{ myAnimeItem ? 'Actualizar Lista' : 'Añadir a Mi Lista' }}
+          </button>
+
+          <button (click)="toggleFavorite()" class="btn-favorite" [class.favorite]="isFavorite">
+            {{ isFavorite ? '❤️ Favorito' : '🤍 Favorito' }}
+          </button>
+
+          @if (myAnimeItem) {
+            <button (click)="removeFromMyList()" class="btn-remove">Eliminar</button>
+          }
+        </div>
+
+        @if (myAnimeItem) {
+          <div class="personal-score">
+            <label>Tu Puntuación:</label>
+            <div class="score-input">
+              <input type="range" min="0" max="10" step="0.5" [(ngModel)]="personalScore" 
+                     (input)="updatePersonalScore(+$any($event.target).value)" />
+              <span class="score-display">{{ personalScore || 'Sin puntuación' }}</span>
+              @if (personalScore && anime.score) {
+                <span class="score-comparison">
+                  (API: {{ anime.score.toFixed(1) }})
+                </span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="anime-detail-content">
+      <section class="synopsis-section">
+        <h2>Sinopsis</h2>
+        <p class="synopsis">{{ anime.synopsis || 'No hay sinopsis disponible.' }}</p>
+      </section>
+
+      <section class="additional-info">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Fecha de emisión:</span>
+            <span class="info-value">{{ formatDate(anime.aired.from) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Fecha de finalización:</span>
+            <span class="info-value">{{ formatDate(anime.aired.to) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Duración:</span>
+            <span class="info-value">{{ anime.duration || 'N/A' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Estudio:</span>
+            <span class="info-value">
+              {{ getStudios() }}
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Temporada:</span>
+            <span class="info-value">
+              {{ anime.season ? `${anime.season} ${anime.year}` : 'N/A' }}
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Clasificación:</span>
+            <span class="info-value">{{ anime.rating || 'N/A' }}</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="episodes-section">
+        <button (click)="loadEpisodes()" class="section-toggle">
+          Episodios {{ showEpisodes ? '▼' : '▶' }}
+        </button>
+        @if (loadingEpisodes) {
+          <div class="loading-section">
+            <div class="spinner small"></div>
+            <p>Cargando episodios...</p>
+          </div>
+        }
+        @if (showEpisodes && episodes.length > 0) {
+          <div class="episodes-list">
+            @for (episode of episodes; track episode.mal_id) {
+              <div class="episode-item">
+                <div class="episode-number">Ep. {{ episode.mal_id }}</div>
+                <div class="episode-info">
+                  <h4>{{ episode.title }}</h4>
+                  @if (episode.title_japanese) {
+                    <p class="episode-title-japanese">{{ episode.title_japanese }}</p>
+                  }
+                  @if (episode.aired) {
+                    <p class="episode-date">📅 {{ formatDate(episode.aired) }}</p>
+                  }
+                  @if (episode.score) {
+                    <p class="episode-score">⭐ {{ episode.score }}</p>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+        @if (showEpisodes && episodes.length === 0 && !loadingEpisodes) {
+          <p class="no-data">No hay episodios disponibles.</p>
+        }
+      </section>
+
+      <section class="reviews-section">
+        <button (click)="loadReviews()" class="section-toggle">
+          Reseñas {{ showReviews ? '▼' : '▶' }}
+        </button>
+        @if (loadingReviews) {
+          <div class="loading-section">
+            <div class="spinner small"></div>
+            <p>Cargando reseñas...</p>
+          </div>
+        }
+        @if (showReviews && reviews.length > 0) {
+          <div class="reviews-list">
+            @for (review of reviews; track review.mal_id) {
+              <div class="review-item">
+                <div class="review-header">
+                  <div class="review-user">
+                    <img [src]="review.user.images.jpg.image_url" [alt]="review.user.username" />
+                    <span class="review-username">{{ review.user.username }}</span>
+                  </div>
+                  <div class="review-score">⭐ {{ review.score }}/10</div>
+                </div>
+                <div class="review-content">
+                  <p [innerHTML]="review.review"></p>
+                </div>
+                <div class="review-footer">
+                  <span class="review-date">{{ formatDate(review.date) }}</span>
+                  @if (review.tags.length > 0) {
+                    <div class="review-tags">
+                      @for (tag of review.tags; track tag) {
+                        <span class="review-tag">{{ tag }}</span>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+        @if (showReviews && reviews.length === 0 && !loadingReviews) {
+          <p class="no-data">No hay reseñas disponibles.</p>
+        }
+      </section>
+    </div>
+  }
+</div>

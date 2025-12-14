@@ -1,0 +1,14 @@
+<div class="search-bar">
+  <div class="search-input-wrapper">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (keyup)="onKeyPress($event)"
+      placeholder="Buscar animes..."
+      class="search-input"
+    />
+    <button (click)="onSearch()" class="search-button">
+      <span class="search-icon">🔍</span>
+    </button>
+  </div>
+</div>

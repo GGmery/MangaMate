@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 25%, #DDD6FE 50%, #E9D5FF 75%, #F3E8FF 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+  color: #5B21B6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #4c1d95 50%, #312e81 75%, #1e1b4b 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  color: #FFFFFF !important;
+}
+
+body.dark-mode,
+body.dark-mode * {
+  color: #FFFFFF;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode label,
+body.dark-mode div:not(.navbar-brand):not(.logo-text):not(.score-value),
+body.dark-mode li,
+body.dark-mode td,
+body.dark-mode th,
+body.dark-mode a:not(.navbar-links a.active) {
+  color: #FFFFFF !important;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+}

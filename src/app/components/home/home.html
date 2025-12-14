@@ -1,0 +1,137 @@
+<div class="home-container">
+  <div class="hero-section">
+    <h1 class="hero-title">🎌 MangaMate</h1>
+    <p class="hero-subtitle">Descubre y organiza tus animes favoritos</p>
+  </div>
+
+  <div class="search-section">
+    <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    <button (click)="toggleAdvancedSearch()" class="toggle-advanced-btn">
+      {{ showAdvancedSearch ? 'Búsqueda Simple' : 'Búsqueda Avanzada' }}
+    </button>
+  </div>
+
+  @if (showAdvancedSearch) {
+    <app-advanced-search (search)="onAdvancedSearch($event)"></app-advanced-search>
+  }
+
+  @if (loading && animes.length === 0) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando animes...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error-container">
+      <p class="error-message">❌ {{ error }}</p>
+    </div>
+  }
+
+  @if (!loading && !error && animes.length === 0 && searchQuery) {
+    <div class="no-results">
+      <p>No se encontraron animes para "{{ searchQuery }}"</p>
+    </div>
+  }
+
+  @if (animes.length > 0) {
+    <div class="results-section">
+      <h2 class="results-title">
+        {{ searchQuery ? `Resultados para "${searchQuery}"` : 'Resultados' }}
+        <span class="results-count">({{ animes.length }})</span>
+      </h2>
+      <div class="animes-grid">
+        @for (anime of animes; track anime.mal_id) {
+          <app-anime-card [anime]="anime"></app-anime-card>
+        }
+      </div>
+      @if (hasNextPage && !loading) {
+        <button (click)="loadMore()" class="load-more-btn">Cargar más</button>
+      }
+      @if (loading && animes.length > 0) {
+        <div class="loading-more">
+          <div class="spinner small"></div>
+        </div>
+      }
+    </div>
+  }
+
+  <section class="anime-section">
+    <div class="section-header">
+      <h2 class="section-title">☆ Top animes</h2>
+    </div>
+    @if (loadingTop) {
+      <div class="carousel-loading">
+        <div class="spinner small"></div>
+        <p>Cargando top animes...</p>
+      </div>
+    } @else if (topAnimes.length > 0) {
+      <div class="carousel-wrapper">
+        <button class="carousel-nav-btn prev" (click)="scrollCarousel('top-animes-carousel', 'left')" aria-label="Anterior">
+          ‹
+        </button>
+        <div id="top-animes-carousel" class="anime-carousel">
+          @for (anime of topAnimes; track anime.mal_id) {
+            <app-anime-card [anime]="anime"></app-anime-card>
+          }
+        </div>
+        <button class="carousel-nav-btn next" (click)="scrollCarousel('top-animes-carousel', 'right')" aria-label="Siguiente">
+          ›
+        </button>
+      </div>
+    }
+  </section>
+
+  <section class="anime-section">
+    <div class="section-header">
+      <h2 class="section-title">🗓️ Temporada actual</h2>
+    </div>
+    @if (loadingCurrentSeason) {
+      <div class="carousel-loading">
+        <div class="spinner small"></div>
+        <p>Cargando temporada actual...</p>
+      </div>
+    } @else if (currentSeasonAnimes.length > 0) {
+      <div class="carousel-wrapper">
+        <button class="carousel-nav-btn prev" (click)="scrollCarousel('current-season-carousel', 'left')" aria-label="Anterior">
+          ‹
+        </button>
+        <div id="current-season-carousel" class="anime-carousel">
+          @for (anime of currentSeasonAnimes; track anime.mal_id) {
+            <app-anime-card [anime]="anime"></app-anime-card>
+          }
+        </div>
+        <button class="carousel-nav-btn next" (click)="scrollCarousel('current-season-carousel', 'right')" aria-label="Siguiente">
+          ›
+        </button>
+      </div>
+    }
+  </section>
+
+  <section class="anime-section">
+    <div class="section-header">
+      <h2 class="section-title">🚀 Próximamente</h2>
+    </div>
+    @if (loadingUpcoming) {
+      <div class="carousel-loading">
+        <div class="spinner small"></div>
+        <p>Cargando próximos animes...</p>
+      </div>
+    } @else if (upcomingAnimes.length > 0) {
+      <div class="carousel-wrapper">
+        <button class="carousel-nav-btn prev" (click)="scrollCarousel('upcoming-carousel', 'left')" aria-label="Anterior">
+          ‹
+        </button>
+        <div id="upcoming-carousel" class="anime-carousel">
+          @for (anime of upcomingAnimes; track anime.mal_id) {
+            <app-anime-card [anime]="anime"></app-anime-card>
+          }
+        </div>
+        <button class="carousel-nav-btn next" (click)="scrollCarousel('upcoming-carousel', 'right')" aria-label="Siguiente">
+          ›
+        </button>
+      </div>
+    }
+  </section>
+
+</div>

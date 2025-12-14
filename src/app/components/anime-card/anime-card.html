@@ -1,0 +1,16 @@
+<a [routerLink]="['/anime', anime.mal_id]" class="anime-card">
+  <div class="anime-card-image">
+    <img [src]="getImageUrl()" [alt]="anime.title" />
+    @if (anime.score) {
+      <div class="anime-card-score">
+        <span class="score-value">{{ getScore() }}</span>
+      </div>
+    }
+  </div>
+  <div class="anime-card-content">
+    <h3 class="anime-card-title">{{ anime.title }}</h3>
+    <div class="anime-card-info">
+      <span class="anime-type-year">{{ getType() }} - {{ getYear() }}</span>
+    </div>
+  </div>
+</a>
